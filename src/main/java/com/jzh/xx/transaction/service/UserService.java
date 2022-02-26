@@ -1,13 +1,12 @@
 package com.jzh.xx.transaction.service;
 
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzh.xx.transaction.domain.XxUser;
 import com.jzh.xx.transaction.dto.ComResult;
 import com.jzh.xx.transaction.dto.PageInfo;
 
-import java.util.Map;
-
-public interface UserService {
+public interface UserService extends IService<XxUser> {
     XxUser login(String phone, String password);
 
     void register(String realname,String phone,String username,String password);
@@ -18,7 +17,7 @@ public interface UserService {
 
     void delete(Long id);
 
-    void save(XxUser user);
+    void saveUser(XxUser user);
 
     XxUser getById(Long id);
 

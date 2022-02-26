@@ -15,6 +15,6 @@ public class WebAppConfigurer implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         //登录拦截
-        InterceptorRegistration registration = registry.addInterceptor(new LoginInterceptor());
+        //registry.addInterceptor(new LoginInterceptor());
     }
 }

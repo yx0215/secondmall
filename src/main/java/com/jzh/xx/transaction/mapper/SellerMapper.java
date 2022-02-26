@@ -1,12 +1,12 @@
 package com.jzh.xx.transaction.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jzh.xx.transaction.domain.Seller;
-import tk.mybatis.MyMapper;
 
 import java.util.List;
 import java.util.Map;
 
-public interface SellerMapper extends MyMapper<Seller> {
+public interface SellerMapper extends BaseMapper<Seller> {
     /**
      * 卖家分页
      * @param params

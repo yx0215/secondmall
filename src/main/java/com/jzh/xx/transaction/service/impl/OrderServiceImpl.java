@@ -1,5 +1,7 @@
 package com.jzh.xx.transaction.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzh.xx.transaction.domain.*;
 import com.jzh.xx.transaction.dto.PageInfo;
 import com.jzh.xx.transaction.mapper.*;
@@ -9,13 +11,12 @@ import com.jzh.xx.transaction.vo.OrderVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.*;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl extends ServiceImpl<ShopOrderMapper,ShopOrder> implements OrderService {
 
     @Resource
     private ShopOrderMapper shopOrderMapper;
@@ -28,7 +29,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Resource
     private ExpressMapper expressMapper;
-
 
     /**
      * 后台订单信息
@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
         params.put("length", length);
         params.put("order", order);
 
-        int count = shopOrderMapper.selectCount(order);
+        int count = shopOrderMapper.selectCount(Wrappers.lambdaQuery(order));
         PageInfo<ShopOrder> pageInfo = new PageInfo<>();
         pageInfo.setDraw(draw);
         pageInfo.setRecordsTotal(count);
@@ -68,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
         List<Cart> carts = cartMapper.getByUserId(userId);
 
         //获取快递
-        Express express = expressMapper.selectByPrimaryKey(expressId);
+        Express express = expressMapper.selectById(expressId);
 
         // 生成订单 ID
         Long orderId = IDUtil.getRandomId();
@@ -103,7 +103,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderPrice(orderPrice);
         order.setStatus((byte) 2);
         order.setCreated(new Date());
-        shopOrderMapper.insert(order);
+        this.save(order);
         return orderId;
     }
 
@@ -112,14 +112,14 @@ public class OrderServiceImpl implements OrderService {
         OrderVO orderVO = new OrderVO();
 
         // 根据订单 ID 查询出订单信息
-        ShopOrder order = shopOrderMapper.selectByPrimaryKey(orderId);
+        ShopOrder order = shopOrderMapper.selectById(orderId);
 
         //订单id
         orderVO.setId(orderId);
 
         // 订单快递信息
         Long expressId = order.getExpressId();
-        Express express = expressMapper.selectByPrimaryKey(expressId);
+        Express express = expressMapper.selectById(expressId);
         orderVO.setExpress(express);
 
         // 订单项信息
@@ -138,14 +138,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void updateOrder(ShopOrder order) {
-        Example example = new Example(ShopOrder.class);
-        example.createCriteria().andEqualTo("id",order.getId());
-        shopOrderMapper.updateByExampleSelective(order,example);
+//        Example example = new Example(ShopOrder.class);
+//        example.createCriteria().andEqualTo("id",order.getId());
+        shopOrderMapper.update(order,Wrappers.<ShopOrder>lambdaUpdate().eq(ShopOrder::getId,order.getId()));
     }
 
     @Override
     public Long getUserId(Long orderId) {
-        ShopOrder order = shopOrderMapper.selectByPrimaryKey(orderId);
+        ShopOrder order = shopOrderMapper.selectById(orderId);
         Long userId = order.getUserId();
         return userId;
     }
@@ -153,9 +153,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderVO getOrderId(Long userId) {
         OrderVO orderVO = new OrderVO();
-        Example example = new Example(ShopOrder.class);
-        example.createCriteria().andEqualTo("userId",userId);
-        List<ShopOrder> shopOrders = shopOrderMapper.selectByExample(example);
+//        Example example = new Example(ShopOrder.class);
+//        example.createCriteria().andEqualTo("userId",userId);
+        List<ShopOrder> shopOrders = shopOrderMapper.selectList(Wrappers.<ShopOrder>lambdaQuery().eq(ShopOrder::getUserId,userId));
         for (int i = 0;i < shopOrders.size();i++){
             Long orderId = shopOrders.get(i).getId();
             //订单创建时间
@@ -170,18 +170,18 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void updateStatus(Long id) {
-        ShopOrder shopOrder = shopOrderMapper.selectByPrimaryKey(id);
+        ShopOrder shopOrder = shopOrderMapper.selectById(id);
         shopOrder.setStatus((byte) 1);
-        shopOrderMapper.updateByPrimaryKeySelective(shopOrder);
+        shopOrderMapper.updateById(shopOrder);
     }
 
     @Override
     public void delete(Long id) {
-        Example example = new Example(OrderDetail.class);
-        example.createCriteria().andEqualTo("orderId",id);
-        orderDetailMapper.deleteByExample(example);
+//        Example example = new Example(OrderDetail.class);
+//        example.createCriteria().andEqualTo("orderId",id);
+        orderDetailMapper.delete(Wrappers.<OrderDetail>lambdaQuery().eq(OrderDetail::getOrderId,id));
 
-        shopOrderMapper.deleteByPrimaryKey(id);
+        shopOrderMapper.deleteById(id);
     }
 
     @Override

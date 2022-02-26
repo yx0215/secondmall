@@ -1,149 +1,101 @@
 package com.jzh.xx.transaction.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+import lombok.Data;
 
-public class Address {
+/**
+ * 
+ * @TableName address
+ */
+@TableName(value ="address")
+@Data
+public class Address implements Serializable {
     /**
-     * 地址ID
+     * 
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableId
     private Long id;
 
     /**
-     * 用户ID
+     * 
      */
-    @Column(name = "user_id")
     private Long userId;
 
     /**
-     * 联系人号码
+     * 
      */
-    @Column(name = "con_phone")
     private String conPhone;
 
     /**
-     * 详细地址
+     * 
      */
-    @Column(name = "detail_addr")
     private String detailAddr;
 
     /**
-     * 邮编
+     * 
      */
     private String postcode;
 
     /**
-     * 创建时间
+     * 
      */
     private Date created;
 
-    /**
-     * 获取地址ID
-     *
-     * @return id - 地址ID
-     */
-    public Long getId() {
-        return id;
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Address other = (Address) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
+            && (this.getConPhone() == null ? other.getConPhone() == null : this.getConPhone().equals(other.getConPhone()))
+            && (this.getDetailAddr() == null ? other.getDetailAddr() == null : this.getDetailAddr().equals(other.getDetailAddr()))
+            && (this.getPostcode() == null ? other.getPostcode() == null : this.getPostcode().equals(other.getPostcode()))
+            && (this.getCreated() == null ? other.getCreated() == null : this.getCreated().equals(other.getCreated()));
     }
 
-    /**
-     * 设置地址ID
-     *
-     * @param id 地址ID
-     */
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
+        result = prime * result + ((getConPhone() == null) ? 0 : getConPhone().hashCode());
+        result = prime * result + ((getDetailAddr() == null) ? 0 : getDetailAddr().hashCode());
+        result = prime * result + ((getPostcode() == null) ? 0 : getPostcode().hashCode());
+        result = prime * result + ((getCreated() == null) ? 0 : getCreated().hashCode());
+        return result;
     }
 
-    /**
-     * 获取用户ID
-     *
-     * @return user_id - 用户ID
-     */
-    public Long getUserId() {
-        return userId;
-    }
-
-    /**
-     * 设置用户ID
-     *
-     * @param userId 用户ID
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    /**
-     * 获取联系人号码
-     *
-     * @return con_phone - 联系人号码
-     */
-    public String getConPhone() {
-        return conPhone;
-    }
-
-    /**
-     * 设置联系人号码
-     *
-     * @param conPhone 联系人号码
-     */
-    public void setConPhone(String conPhone) {
-        this.conPhone = conPhone;
-    }
-
-    /**
-     * 获取详细地址
-     *
-     * @return detail_addr - 详细地址
-     */
-    public String getDetailAddr() {
-        return detailAddr;
-    }
-
-    /**
-     * 设置详细地址
-     *
-     * @param detailAddr 详细地址
-     */
-    public void setDetailAddr(String detailAddr) {
-        this.detailAddr = detailAddr;
-    }
-
-    /**
-     * 获取邮编
-     *
-     * @return postcode - 邮编
-     */
-    public String getPostcode() {
-        return postcode;
-    }
-
-    /**
-     * 设置邮编
-     *
-     * @param postcode 邮编
-     */
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
-    }
-
-    /**
-     * 获取创建时间
-     *
-     * @return created - 创建时间
-     */
-    public Date getCreated() {
-        return created;
-    }
-
-    /**
-     * 设置创建时间
-     *
-     * @param created 创建时间
-     */
-    public void setCreated(Date created) {
-        this.created = created;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", conPhone=").append(conPhone);
+        sb.append(", detailAddr=").append(detailAddr);
+        sb.append(", postcode=").append(postcode);
+        sb.append(", created=").append(created);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

@@ -1,15 +1,24 @@
 package com.jzh.xx.transaction.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+import lombok.Data;
 
+/**
+ * 
+ * @TableName xx_user
+ */
+@TableName(value ="xx_user")
+@Data
 public class XxUser implements Serializable {
     /**
      * 用户ID
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -57,183 +66,68 @@ public class XxUser implements Serializable {
      */
     private Date updated;
 
-    /**
-     * 获取用户ID
-     *
-     * @return id - 用户ID
-     */
-    public Long getId() {
-        return id;
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        XxUser other = (XxUser) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
+            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
+            && (this.getRealname() == null ? other.getRealname() == null : this.getRealname().equals(other.getRealname()))
+            && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
+            && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
+            && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
+            && (this.getPostcode() == null ? other.getPostcode() == null : this.getPostcode().equals(other.getPostcode()))
+            && (this.getCreated() == null ? other.getCreated() == null : this.getCreated().equals(other.getCreated()))
+            && (this.getUpdated() == null ? other.getUpdated() == null : this.getUpdated().equals(other.getUpdated()));
     }
 
-    /**
-     * 设置用户ID
-     *
-     * @param id 用户ID
-     */
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
+        result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
+        result = prime * result + ((getRealname() == null) ? 0 : getRealname().hashCode());
+        result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
+        result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
+        result = prime * result + ((getAddress() == null) ? 0 : getAddress().hashCode());
+        result = prime * result + ((getPostcode() == null) ? 0 : getPostcode().hashCode());
+        result = prime * result + ((getCreated() == null) ? 0 : getCreated().hashCode());
+        result = prime * result + ((getUpdated() == null) ? 0 : getUpdated().hashCode());
+        return result;
     }
 
-    /**
-     * 获取用户名
-     *
-     * @return username - 用户名
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * 设置用户名
-     *
-     * @param username 用户名
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    /**
-     * 获取密码
-     *
-     * @return password - 密码
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * 设置密码
-     *
-     * @param password 密码
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**
-     * 获取姓名
-     *
-     * @return realname - 姓名
-     */
-    public String getRealname() {
-        return realname;
-    }
-
-    /**
-     * 设置姓名
-     *
-     * @param realname 姓名
-     */
-    public void setRealname(String realname) {
-        this.realname = realname;
-    }
-
-    /**
-     * 获取邮箱
-     *
-     * @return email - 邮箱
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * 设置邮箱
-     *
-     * @param email 邮箱
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
-     * 获取手机号码
-     *
-     * @return phone - 手机号码
-     */
-    public String getPhone() {
-        return phone;
-    }
-
-    /**
-     * 设置手机号码
-     *
-     * @param phone 手机号码
-     */
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    /**
-     * 获取详细地址
-     *
-     * @return address - 详细地址
-     */
-    public String getAddress() {
-        return address;
-    }
-
-    /**
-     * 设置详细地址
-     *
-     * @param address 详细地址
-     */
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    /**
-     * 获取邮编
-     *
-     * @return postcode - 邮编
-     */
-    public Long getPostcode() {
-        return postcode;
-    }
-
-    /**
-     * 设置邮编
-     *
-     * @param postcode 邮编
-     */
-    public void setPostcode(Long postcode) {
-        this.postcode = postcode;
-    }
-
-    /**
-     * 获取创建时间
-     *
-     * @return created - 创建时间
-     */
-    public Date getCreated() {
-        return created;
-    }
-
-    /**
-     * 设置创建时间
-     *
-     * @param created 创建时间
-     */
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    /**
-     * 获取更新时间
-     *
-     * @return updated - 更新时间
-     */
-    public Date getUpdated() {
-        return updated;
-    }
-
-    /**
-     * 设置更新时间
-     *
-     * @param updated 更新时间
-     */
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", username=").append(username);
+        sb.append(", password=").append(password);
+        sb.append(", realname=").append(realname);
+        sb.append(", email=").append(email);
+        sb.append(", phone=").append(phone);
+        sb.append(", address=").append(address);
+        sb.append(", postcode=").append(postcode);
+        sb.append(", created=").append(created);
+        sb.append(", updated=").append(updated);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

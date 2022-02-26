@@ -1,54 +1,68 @@
 package com.jzh.xx.transaction.domain;
 
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import lombok.Data;
 
-public class Category {
+/**
+ * 
+ * @TableName category
+ */
+@TableName(value ="category")
+@Data
+public class Category implements Serializable {
     /**
      * 分类ID
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
      * 分类名称
      */
-    @Column(name = "category_name")
     private String categoryName;
 
-    /**
-     * 获取分类ID
-     *
-     * @return id - 分类ID
-     */
-    public Long getId() {
-        return id;
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Category other = (Category) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getCategoryName() == null ? other.getCategoryName() == null : this.getCategoryName().equals(other.getCategoryName()));
     }
 
-    /**
-     * 设置分类ID
-     *
-     * @param id 分类ID
-     */
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getCategoryName() == null) ? 0 : getCategoryName().hashCode());
+        return result;
     }
 
-    /**
-     * 获取分类名称
-     *
-     * @return category_name - 分类名称
-     */
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    /**
-     * 设置分类名称
-     *
-     * @param categoryName 分类名称
-     */
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", categoryName=").append(categoryName);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

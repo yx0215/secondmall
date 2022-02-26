@@ -1,11 +1,13 @@
 package com.jzh.xx.transaction.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzh.xx.transaction.domain.Goods;
 import com.jzh.xx.transaction.dto.PageInfo;
 import com.jzh.xx.transaction.mapper.GoodsMapper;
 import com.jzh.xx.transaction.service.GoodsService;
+import com.jzh.xx.transaction.utils.IdWorker;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -14,14 +16,17 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class GoodsServiceImpl implements GoodsService {
+public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods>  implements GoodsService {
 
     @Resource
     private GoodsMapper goodsMapper;
 
+    @Resource
+    private IdWorker idWorker;
+
     @Override
     public Goods detail(Long id) {
-        return goodsMapper.selectByPrimaryKey(id);
+        return goodsMapper.selectById(id);
     }
 
     @Override
@@ -32,7 +37,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public List<Goods> showAll() {
-        List<Goods> goodsList = goodsMapper.selectAll();
+        List<Goods> goodsList = goodsMapper.selectList(Wrappers.lambdaQuery());
         return goodsList;
     }
 
@@ -50,9 +55,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public List<Goods> getBySellerId(Long sellerId) {
-        Example example = new Example(Goods.class);
-        example.createCriteria().andEqualTo("sellerId",sellerId);
-        return goodsMapper.selectByExample(example);
+//        Example example = new Example(Goods.class);
+//        example.createCriteria().andEqualTo("sellerId",sellerId);
+        return goodsMapper.selectList(Wrappers.<Goods>lambdaQuery().eq(Goods::getSellerId,sellerId));
     }
 
     @Override
@@ -62,7 +67,7 @@ public class GoodsServiceImpl implements GoodsService {
         params.put("length",length);
         params.put("goods",goods);
 
-        int count = goodsMapper.selectCount(goods);
+        int count = goodsMapper.selectCount(Wrappers.lambdaQuery(goods));
         PageInfo<Goods> pageInfo = new PageInfo<>();
         pageInfo.setDraw(draw);
         pageInfo.setRecordsTotal(count);
@@ -73,41 +78,42 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public void save(Goods goods) {
+    public void saveGoods(Goods goods) {
         //设置更新时间
         goods.setUpdated(new Date());
 
         if (goods.getId() == null){
             goods.setCreated(new Date());
-            goodsMapper.insertSelective(goods);
+            goods.setId(idWorker.nextId());
+            goodsMapper.insert(goods);
         }
         else {
-            goodsMapper.updateByPrimaryKeySelective(goods);
+            goodsMapper.updateById(goods);
         }
     }
 
     @Override
     public void updateJb(Long goodsId, int selected) {
-        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+        Goods goods = goodsMapper.selectById(goodsId);
         if (selected == 1){
             goods.setJbStatus((byte) 2);
-            goodsMapper.updateByPrimaryKeySelective(goods);
+            goodsMapper.updateById(goods);
         }else{
             goods.setJbStatus((byte) 1);
-            goodsMapper.updateByPrimaryKeySelective(goods);
+            goodsMapper.updateById(goods);
         }
     }
 
     @Override
     public void delete(Long id) {
-        goodsMapper.deleteByPrimaryKey(id);
+        goodsMapper.deleteById(id);
     }
 
     @Override
     public void deleteSelected(String[] sIds) {
         for (String sId : sIds) {
             int id = Integer.parseInt(sId);
-            goodsMapper.deleteByPrimaryKey(id);
+            goodsMapper.deleteById(id);
         }
     }
 
@@ -125,7 +131,7 @@ public class GoodsServiceImpl implements GoodsService {
     public void delSelected(String[] sIds) {
         for (String sId : sIds) {
             int id = Integer.parseInt(sId);
-            goodsMapper.deleteByPrimaryKey(id);
+            goodsMapper.deleteById(id);
         }
     }
 
@@ -136,9 +142,9 @@ public class GoodsServiceImpl implements GoodsService {
         int countBySellerId = goodsMapper.GoodsCountBySellerId(id);
         map.put("countBySellerId",countBySellerId);
 
-        Example example = new Example(Goods.class);
-        example.createCriteria().andEqualTo("sellerId",id).andEqualTo("sellStatus",0);
-        List<Goods> goods = goodsMapper.selectByExample(example);
+//        Example example = new Example(Goods.class);
+//        example.createCriteria().andEqualTo("sellerId",id).andEqualTo("sellStatus",0);
+        List<Goods> goods = goodsMapper.selectList(Wrappers.<Goods>lambdaQuery().eq(Goods::getSellerId,id).eq(Goods::getSellStatus,0));
         int soldCount = goods.size();
         double soldMoney =0;
         for (Goods good : goods) {
@@ -152,9 +158,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public List<Goods> searchSome(String search) {
-        Example example = new Example(Goods.class);
-        example.createCriteria().andLike("goodsName","%"+search+"%");
-        List<Goods> goods = goodsMapper.selectByExample(example);
+//        Example example = new Example(Goods.class);
+//        example.createCriteria().andLike("goodsName","%"+search+"%");
+        List<Goods> goods = goodsMapper.selectList(Wrappers.<Goods>lambdaQuery().like(Goods::getGoodsName,search));
         return goods;
     }
 

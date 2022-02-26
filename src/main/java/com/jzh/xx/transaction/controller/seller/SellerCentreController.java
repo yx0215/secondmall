@@ -3,6 +3,8 @@ package com.jzh.xx.transaction.controller.seller;
 import com.jzh.xx.transaction.domain.Seller;
 import com.jzh.xx.transaction.service.GoodsService;
 import com.jzh.xx.transaction.service.SellerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("sellerCentre")
+@Api(value = "卖家中心",tags = "卖家中心接口")
 public class SellerCentreController {
 
     @Resource
@@ -23,6 +26,7 @@ public class SellerCentreController {
     @Resource
     private GoodsService goodsService;
 
+    @ApiOperation(value = "首页")
     @GetMapping("index")
     public String centre(Model model,HttpSession session){
         Seller seller = (Seller) session.getAttribute("seller");
@@ -38,7 +42,7 @@ public class SellerCentreController {
         return "seller/index";
     }
 
-
+    @ApiOperation(value = "列表")
     @GetMapping("list")
     public String list(HttpSession session, Model model){
         Seller seller = (Seller) session.getAttribute("seller");
@@ -52,9 +56,10 @@ public class SellerCentreController {
      * @param seller
      * @return
      */
+    @ApiOperation(value = "保存卖家信息")
     @PostMapping("save")
     public String save(Seller seller){
-        sellerService.save(seller);
+        sellerService.saveSeller(seller);
         return "seller/seller_info";
     }
 
@@ -64,6 +69,7 @@ public class SellerCentreController {
      * @param model
      * @return
      */
+    @ApiOperation(value = "修改卖家信息")
     @GetMapping("update")
     public String toUpdate(HttpSession session, Model model){
         Seller seller = (Seller) session.getAttribute("seller");

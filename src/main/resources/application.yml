@@ -7,7 +7,7 @@ spring:
       content-type: text/html
   datasource:
     druid:
-      url: jdbc:mysql:///xx-shop?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://175.24.177.155:3306/xx-shop?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
       username: root
       password: root
       initial-size: 1
@@ -25,16 +25,26 @@ spring:
       cluster-name: my-application
       cluster-nodes: 127.0.0.1:9300
 
-mybatis:
-        type-aliases-package: com.jzh.xx.transaction.domain
-        mapper-locations: classpath:mapper/*.xml
-
-#pagehelper 分页插件
-pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
-  params: countSql
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.jzh.xx.transaction.domain
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false
+    db-config:
+      #主键类型  0:"数据库ID自增", 1:"不操作", 2:"用户输入ID",3:"数字型snowflake", 4:"全局唯一ID UUID", 5:"字符串型snowflake";
+      id-type: NONE
+      #字段策略
+      insert-strategy: not_null
+      update-strategy: not_null
+      select-strategy: not_empty
+      #驼峰下划线转换
+      table-underline: true
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+    map-underscore-to-camel-case: true
+    cache-enabled: false
 
 #redis
 redis:
@@ -75,3 +85,19 @@ redis:
 
  #sentinel.host2=192.168.1.2
  #sentinel.port2=26379
+
+#swagger公共信息
+swagger:
+  title: 闲闲二手 接口文档系统
+  description: 闲闲二手 接口文档系统
+  version: 1.0.0.RELEASE
+  license: Powered By jzh
+  license-url: https://gitee.com/youth_and_pig
+  terms-of-service-url: https://gitee.com/youth_and_pig
+  contact:
+    name: youth_and_pig
+    email: 1026981384@qq.com
+    url: https://gitee.com/youth_and_pig/second-hand-trading-website
+
+workerId: 0
+datacenterId: 0

@@ -87,8 +87,6 @@ var MyShopApp = function () {
         return _dataTable;
     };
 
-
-
     return {
         initDataTables:function (url,columns) {
             return handlerInitDataTables(url,columns);

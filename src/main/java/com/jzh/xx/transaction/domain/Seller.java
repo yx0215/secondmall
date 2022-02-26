@@ -1,20 +1,29 @@
 package com.jzh.xx.transaction.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+import lombok.Data;
 
-public class Seller {
+/**
+ * 
+ * @TableName seller
+ */
+@TableName(value ="seller")
+@Data
+public class Seller implements Serializable {
     /**
      * 卖家ID
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
      * 卖家名
      */
-    @Column(name = "seller_name")
     private String sellerName;
 
     /**
@@ -52,165 +61,65 @@ public class Seller {
      */
     private Date updated;
 
-    /**
-     * 获取卖家ID
-     *
-     * @return id - 卖家ID
-     */
-    public Long getId() {
-        return id;
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Seller other = (Seller) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getSellerName() == null ? other.getSellerName() == null : this.getSellerName().equals(other.getSellerName()))
+            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
+            && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
+            && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
+            && (this.getCity() == null ? other.getCity() == null : this.getCity().equals(other.getCity()))
+            && (this.getReputation() == null ? other.getReputation() == null : this.getReputation().equals(other.getReputation()))
+            && (this.getCreated() == null ? other.getCreated() == null : this.getCreated().equals(other.getCreated()))
+            && (this.getUpdated() == null ? other.getUpdated() == null : this.getUpdated().equals(other.getUpdated()));
     }
 
-    /**
-     * 设置卖家ID
-     *
-     * @param id 卖家ID
-     */
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getSellerName() == null) ? 0 : getSellerName().hashCode());
+        result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
+        result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
+        result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
+        result = prime * result + ((getCity() == null) ? 0 : getCity().hashCode());
+        result = prime * result + ((getReputation() == null) ? 0 : getReputation().hashCode());
+        result = prime * result + ((getCreated() == null) ? 0 : getCreated().hashCode());
+        result = prime * result + ((getUpdated() == null) ? 0 : getUpdated().hashCode());
+        return result;
     }
 
-    /**
-     * 获取卖家名
-     *
-     * @return seller_name - 卖家名
-     */
-    public String getSellerName() {
-        return sellerName;
-    }
-
-    /**
-     * 设置卖家名
-     *
-     * @param sellerName 卖家名
-     */
-    public void setSellerName(String sellerName) {
-        this.sellerName = sellerName;
-    }
-
-    /**
-     * 获取密码
-     *
-     * @return password - 密码
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * 设置密码
-     *
-     * @param password 密码
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**
-     * 获取邮箱
-     *
-     * @return email - 邮箱
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * 设置邮箱
-     *
-     * @param email 邮箱
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
-     * 获取手机号码
-     *
-     * @return phone - 手机号码
-     */
-    public String getPhone() {
-        return phone;
-    }
-
-    /**
-     * 设置手机号码
-     *
-     * @param phone 手机号码
-     */
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    /**
-     * 获取所在城市
-     *
-     * @return city - 所在城市
-     */
-    public String getCity() {
-        return city;
-    }
-
-    /**
-     * 设置所在城市
-     *
-     * @param city 所在城市
-     */
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    /**
-     * 获取信誉程度
-     *
-     * @return reputation - 信誉程度
-     */
-    public String getReputation() {
-        return reputation;
-    }
-
-    /**
-     * 设置信誉程度
-     *
-     * @param reputation 信誉程度
-     */
-    public void setReputation(String reputation) {
-        this.reputation = reputation;
-    }
-
-    /**
-     * 获取创建时间
-     *
-     * @return created - 创建时间
-     */
-    public Date getCreated() {
-        return created;
-    }
-
-    /**
-     * 设置创建时间
-     *
-     * @param created 创建时间
-     */
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    /**
-     * 获取更新时间
-     *
-     * @return updated - 更新时间
-     */
-    public Date getUpdated() {
-        return updated;
-    }
-
-    /**
-     * 设置更新时间
-     *
-     * @param updated 更新时间
-     */
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", sellerName=").append(sellerName);
+        sb.append(", password=").append(password);
+        sb.append(", email=").append(email);
+        sb.append(", phone=").append(phone);
+        sb.append(", city=").append(city);
+        sb.append(", reputation=").append(reputation);
+        sb.append(", created=").append(created);
+        sb.append(", updated=").append(updated);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

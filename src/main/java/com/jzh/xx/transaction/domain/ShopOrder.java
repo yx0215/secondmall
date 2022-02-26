@@ -1,38 +1,44 @@
 package com.jzh.xx.transaction.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+import lombok.Data;
 
-public class ShopOrder {
+/**
+ * 
+ * @TableName shop_order
+ */
+@TableName(value ="shop_order")
+@Data
+public class ShopOrder implements Serializable {
     /**
      * 订单ID
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableId(type = IdType.INPUT)
     private Long id;
 
     /**
      * 用户ID
      */
-    @Column(name = "user_id")
     private Long userId;
 
     /**
      * 快递ID
      */
-    @Column(name = "express_id")
     private Long expressId;
 
     /**
      * 订单价格
      */
-    @Column(name = "order_price")
     private Double orderPrice;
 
     /**
      * 订单备注
      */
-    @Column(name = "order_remarks")
     private String orderRemarks;
 
     /**
@@ -48,150 +54,64 @@ public class ShopOrder {
     /**
      * 完成时间
      */
-    @Column(name = "over_time")
     private Date overTime;
 
-    /**
-     * 获取订单ID
-     *
-     * @return id - 订单ID
-     */
-    public Long getId() {
-        return id;
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        ShopOrder other = (ShopOrder) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
+            && (this.getExpressId() == null ? other.getExpressId() == null : this.getExpressId().equals(other.getExpressId()))
+            && (this.getOrderPrice() == null ? other.getOrderPrice() == null : this.getOrderPrice().equals(other.getOrderPrice()))
+            && (this.getOrderRemarks() == null ? other.getOrderRemarks() == null : this.getOrderRemarks().equals(other.getOrderRemarks()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getCreated() == null ? other.getCreated() == null : this.getCreated().equals(other.getCreated()))
+            && (this.getOverTime() == null ? other.getOverTime() == null : this.getOverTime().equals(other.getOverTime()));
     }
 
-    /**
-     * 设置订单ID
-     *
-     * @param id 订单ID
-     */
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
+        result = prime * result + ((getExpressId() == null) ? 0 : getExpressId().hashCode());
+        result = prime * result + ((getOrderPrice() == null) ? 0 : getOrderPrice().hashCode());
+        result = prime * result + ((getOrderRemarks() == null) ? 0 : getOrderRemarks().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getCreated() == null) ? 0 : getCreated().hashCode());
+        result = prime * result + ((getOverTime() == null) ? 0 : getOverTime().hashCode());
+        return result;
     }
 
-    /**
-     * 获取用户ID
-     *
-     * @return user_id - 用户ID
-     */
-    public Long getUserId() {
-        return userId;
-    }
-
-    /**
-     * 设置用户ID
-     *
-     * @param userId 用户ID
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    /**
-     * 获取快递ID
-     *
-     * @return express_id - 快递ID
-     */
-    public Long getExpressId() {
-        return expressId;
-    }
-
-    /**
-     * 设置快递ID
-     *
-     * @param expressId 快递ID
-     */
-    public void setExpressId(Long expressId) {
-        this.expressId = expressId;
-    }
-
-    /**
-     * 获取订单价格
-     *
-     * @return order_price - 订单价格
-     */
-    public Double getOrderPrice() {
-        return orderPrice;
-    }
-
-    /**
-     * 设置订单价格
-     *
-     * @param orderPrice 订单价格
-     */
-    public void setOrderPrice(Double orderPrice) {
-        this.orderPrice = orderPrice;
-    }
-
-    /**
-     * 获取订单备注
-     *
-     * @return order_remarks - 订单备注
-     */
-    public String getOrderRemarks() {
-        return orderRemarks;
-    }
-
-    /**
-     * 设置订单备注
-     *
-     * @param orderRemarks 订单备注
-     */
-    public void setOrderRemarks(String orderRemarks) {
-        this.orderRemarks = orderRemarks;
-    }
-
-    /**
-     * 获取1完成  2未完成
-     *
-     * @return status - 1完成  2未完成
-     */
-    public Byte getStatus() {
-        return status;
-    }
-
-    /**
-     * 设置1完成  2未完成
-     *
-     * @param status 1完成  2未完成
-     */
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
-
-    /**
-     * 获取创建时间
-     *
-     * @return created - 创建时间
-     */
-    public Date getCreated() {
-        return created;
-    }
-
-    /**
-     * 设置创建时间
-     *
-     * @param created 创建时间
-     */
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    /**
-     * 获取完成时间
-     *
-     * @return over_time - 完成时间
-     */
-    public Date getOverTime() {
-        return overTime;
-    }
-
-    /**
-     * 设置完成时间
-     *
-     * @param overTime 完成时间
-     */
-    public void setOverTime(Date overTime) {
-        this.overTime = overTime;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", expressId=").append(expressId);
+        sb.append(", orderPrice=").append(orderPrice);
+        sb.append(", orderRemarks=").append(orderRemarks);
+        sb.append(", status=").append(status);
+        sb.append(", created=").append(created);
+        sb.append(", overTime=").append(overTime);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

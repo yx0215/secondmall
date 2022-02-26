@@ -1,5 +1,6 @@
 package com.jzh.xx.transaction.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jzh.xx.transaction.domain.Goods;

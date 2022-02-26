@@ -17,6 +17,7 @@ import java.util.Map;
 
 @Controller
 public class UploadController {
+
     private static final String ENDPOINT = "oss-cn-shenzhen.aliyuncs.com";
     private static final String ACCESS_KEY_ID = "LTAI4FpbVyixp5LA5jrDsPGq";
     private static final String ACCESS_KEY_SECRET = "dcNVI0I82ucLb4TK8oAHRFJHvjvrCl";

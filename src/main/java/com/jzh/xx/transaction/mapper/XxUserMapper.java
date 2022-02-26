@@ -1,12 +1,12 @@
 package com.jzh.xx.transaction.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jzh.xx.transaction.domain.XxUser;
-import tk.mybatis.MyMapper;
 
 import java.util.List;
 import java.util.Map;
 
-public interface XxUserMapper extends MyMapper<XxUser> {
+public interface XxUserMapper extends BaseMapper<XxUser> {
     /**
      * 查询用户
      * @param phone

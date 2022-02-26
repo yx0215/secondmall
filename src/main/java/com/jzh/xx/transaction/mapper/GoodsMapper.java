@@ -1,12 +1,11 @@
 package com.jzh.xx.transaction.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jzh.xx.transaction.domain.Goods;
-import tk.mybatis.MyMapper;
-
 import java.util.List;
 import java.util.Map;
 
-    public interface GoodsMapper extends MyMapper<Goods> {
+public interface GoodsMapper extends BaseMapper<Goods> {
     /**
      * 精选
      * @return

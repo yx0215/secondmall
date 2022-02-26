@@ -1,5 +1,7 @@
 package com.jzh.xx.transaction.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzh.xx.transaction.domain.XxUser;
 import com.jzh.xx.transaction.dto.ComResult;
 import com.jzh.xx.transaction.dto.PageInfo;
@@ -7,10 +9,8 @@ import com.jzh.xx.transaction.mapper.XxUserMapper;
 import com.jzh.xx.transaction.service.UserService;
 import com.jzh.xx.transaction.utils.RegexUtils;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<XxUserMapper, XxUser> implements UserService {
 
     @Resource
     private XxUserMapper userMapper;
@@ -86,9 +86,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean verPhone(String phone) {
-        Example example = new Example(XxUser.class);
-        example.createCriteria().andEqualTo("phone",phone);
-        XxUser user = userMapper.selectOneByExample(example);
+//        Example example = new Example(XxUser.class);
+//        example.createCriteria().andEqualTo("phone",phone);
+        XxUser user = userMapper.selectOne(Wrappers.<XxUser>lambdaQuery().eq(XxUser::getPhone,phone));
         if (user == null){
             return false;
         }
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
         params.put("length",length);
         params.put("User",user);
 
-        int count = userMapper.selectCount(user);
+        int count = userMapper.selectCount(Wrappers.lambdaQuery(user));
         PageInfo<XxUser> pageInfo = new PageInfo<>();
         pageInfo.setDraw(draw);
         pageInfo.setRecordsTotal(count);
@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void delete(Long id) {
-        userMapper.deleteByPrimaryKey(id);
+        userMapper.deleteById(id);
     }
 
     /**
@@ -134,20 +134,20 @@ public class UserServiceImpl implements UserService {
      * @param user
      */
     @Override
-    public void save(XxUser user) {
+    public void saveUser(XxUser user) {
         user.setUpdated(new Date());
         if (user.getId() == null){
             user.setCreated(new Date());
             userMapper.insert(user);
         }
         else{
-            userMapper.updateByPrimaryKey(user);
+            userMapper.updateById(user);
         }
     }
 
     @Override
     public XxUser getById(Long id) {
-        return userMapper.selectByPrimaryKey(id);
+        return userMapper.selectById(id);
     }
 
     /**
@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
         //通过验证
         if (comResult.getStatus() == ComResult.STATUS_SUCCESS){
             xxUser.setUpdated(new Date());
-            userMapper.updateByPrimaryKeySelective(xxUser);
+            userMapper.updateById(xxUser);
             comResult.setMessage("用户信息保存成功");
         }
         return comResult;
@@ -210,7 +210,7 @@ public class UserServiceImpl implements UserService {
     public void deleteSelected(String[] sIds) {
         for (String sId : sIds) {
             int id = Integer.parseInt(sId);
-            userMapper.deleteByPrimaryKey(id);
+            userMapper.deleteById(id);
         }
     }
 

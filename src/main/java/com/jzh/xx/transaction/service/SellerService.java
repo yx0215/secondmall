@@ -1,16 +1,29 @@
 package com.jzh.xx.transaction.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzh.xx.transaction.domain.Seller;
 import com.jzh.xx.transaction.dto.PageInfo;
 
-import java.util.Map;
+public interface SellerService extends IService<Seller> {
 
-public interface SellerService {
+    /**
+     * 卖家详情
+     * @param id
+     * @return
+     */
     Seller seller(Long id);
 
+    /**
+     * 分页
+     * @param draw
+     * @param start
+     * @param length
+     * @param seller
+     * @return
+     */
     PageInfo<Seller> page(int draw, int start, int length, Seller seller);
 
-    void save(Seller seller);
+    void saveSeller(Seller seller);
 
     Seller getById(Long id);
 

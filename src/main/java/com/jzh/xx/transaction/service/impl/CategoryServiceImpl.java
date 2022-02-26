@@ -1,12 +1,10 @@
 package com.jzh.xx.transaction.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzh.xx.transaction.domain.Category;
-import com.jzh.xx.transaction.domain.Goods;
 import com.jzh.xx.transaction.dto.PageInfo;
 import com.jzh.xx.transaction.mapper.CategoryMapper;
-import com.jzh.xx.transaction.mapper.GoodsMapper;
 import com.jzh.xx.transaction.service.CategoryService;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +14,13 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class CategoryServiceImpl implements CategoryService {
+public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
     @Resource
     private CategoryMapper categoryMapper;
 
     @Override
     public Category showCategory(Long id) {
-        return categoryMapper.selectByPrimaryKey(id);
+        return categoryMapper.selectById(id);
     }
 
     @Override
@@ -32,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
         params.put("length",length);
         params.put("Category",category);
 
-        int count = categoryMapper.selectCount(category);
+        int count = categoryMapper.selectCount(Wrappers.lambdaQuery(category));
         PageInfo<Category> pageInfo = new PageInfo<>();
         pageInfo.setDraw(draw);
         pageInfo.setRecordsTotal(count);
@@ -43,28 +41,28 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void save(Category category) {
+    public void saveCategory(Category category) {
         if(category.getId() == null){
             categoryMapper.insert(category);
         }
         else {
-            categoryMapper.updateByPrimaryKey(category);
+            categoryMapper.updateById(category);
         }
     }
 
     @Override
     public Category getById(Long id) {
-        return categoryMapper.selectByPrimaryKey(id);
+        return categoryMapper.selectById(id);
     }
 
     @Override
     public void deleteOne(int id) {
-        categoryMapper.deleteByPrimaryKey(id);
+        categoryMapper.deleteById(id);
     }
 
     @Override
     public List<Category> categoryList() {
-        List<Category> categories = categoryMapper.selectAll();
+        List<Category> categories = categoryMapper.selectList(Wrappers.lambdaQuery());
         return categories;
     }
 
@@ -72,7 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteSelected(String[] sIds) {
         for (String sId : sIds) {
             int i = Integer.parseInt(sId);
-            categoryMapper.deleteByPrimaryKey(i);
+            categoryMapper.deleteById(i);
         }
     }
 }

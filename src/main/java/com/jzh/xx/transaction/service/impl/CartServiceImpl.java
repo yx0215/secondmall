@@ -1,18 +1,20 @@
 package com.jzh.xx.transaction.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzh.xx.transaction.domain.Cart;
 import com.jzh.xx.transaction.domain.Goods;
 import com.jzh.xx.transaction.mapper.CartMapper;
 import com.jzh.xx.transaction.mapper.GoodsMapper;
 import com.jzh.xx.transaction.service.CartService;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class CartServiceImpl implements CartService {
+public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements CartService {
+
     @Resource
     private CartMapper cartMapper;
 
@@ -43,13 +45,14 @@ public class CartServiceImpl implements CartService {
                 // 设置回原来的购物车
                 cartGoods.set(i, cartGood);
                 // 更新数据库
-                cartMapper.updateByPrimaryKeySelective(cartGood);
+                cartMapper.updateById(cartGood);
+                //cartMapper.updateByPrimaryKeySelective(cartGood);
                 return cartGoods;
             }
         }
         // 原来的购物车没有商品记录,新增一条记录
         // 根据商品 ID 查询商品
-        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+        Goods goods = goodsMapper.selectById(goodsId);
         if (goods != null) {
             Cart newCartItem = new Cart();
             newCartItem.setSellerId(sellerId);
@@ -85,9 +88,10 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void deleteByUserId(Long userId) {
-        Example example = new Example(Cart.class);
-        example.createCriteria().andEqualTo("userId",userId);
-        cartMapper.deleteByExample(example);
+//        Example example = new Example(Cart.class);
+//        example.createCriteria().andEqualTo("userId",userId);
+//        cartMapper.deleteByExample(example);
+        cartMapper.delete(Wrappers.<Cart>lambdaQuery().eq(Cart::getUserId,userId));
     }
 
 }

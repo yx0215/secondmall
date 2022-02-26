@@ -1,12 +1,13 @@
 package com.jzh.xx.transaction.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzh.xx.transaction.domain.Goods;
 import com.jzh.xx.transaction.dto.PageInfo;
 
 import java.util.List;
 import java.util.Map;
 
-public interface GoodsService {
+public interface GoodsService extends IService<Goods> {
     /**
      * 商品详情
      * @param id
@@ -59,7 +60,7 @@ public interface GoodsService {
      * 保存商品信息
      * @param goods
      */
-    void save(Goods goods);
+    void saveGoods(Goods goods);
 
     /**
      * 修改精选白菜
@@ -92,7 +93,6 @@ public interface GoodsService {
      */
     int getGoodsCount();
 
-
     /**
      * 删除选中
      * @param sIds
@@ -106,5 +106,10 @@ public interface GoodsService {
      */
     Map<String,Object> IndexInfoBySellerId(Long id);
 
+    /**
+     * 搜索
+     * @param search
+     * @return
+     */
     List<Goods> searchSome(String search);
 }

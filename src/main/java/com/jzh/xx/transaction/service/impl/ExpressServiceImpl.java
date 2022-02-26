@@ -1,5 +1,7 @@
 package com.jzh.xx.transaction.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzh.xx.transaction.domain.Express;
 import com.jzh.xx.transaction.dto.PageInfo;
 import com.jzh.xx.transaction.mapper.ExpressMapper;
@@ -12,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ExpressServiceImpl implements ExpressService {
+public class ExpressServiceImpl extends ServiceImpl<ExpressMapper, Express> implements ExpressService {
 
     @Resource
     private ExpressMapper expressMapper;
@@ -24,7 +26,7 @@ public class ExpressServiceImpl implements ExpressService {
         params.put("length",length);
         params.put("Express",express);
 
-        int count = expressMapper.selectCount(express);
+        int count = expressMapper.selectCount(Wrappers.lambdaQuery(express));
         PageInfo<Express> pageInfo = new PageInfo<>();
         pageInfo.setDraw(draw);
         pageInfo.setRecordsTotal(count);
@@ -39,36 +41,36 @@ public class ExpressServiceImpl implements ExpressService {
      * @param express
      */
     @Override
-    public void save(Express express) {
+    public void saveExpress(Express express) {
         if (express.getId() == null){
             expressMapper.insert(express);
         }
         else {
-            expressMapper.updateByPrimaryKey(express);
+            expressMapper.updateById(express);
         }
     }
 
     @Override
     public Express getById(int id) {
-        Express express = expressMapper.selectByPrimaryKey(id);
+        Express express = expressMapper.selectById(id);
         return express;
     }
 
     @Override
     public void deleteOne(int id) {
-        expressMapper.deleteByPrimaryKey(id);
+        expressMapper.deleteById(id);
     }
 
     @Override
     public List<Express> getAll() {
-        return expressMapper.selectAll();
+        return expressMapper.selectList(Wrappers.lambdaQuery());
     }
 
     @Override
     public void delSelected(String[] sIds) {
         for (String sId : sIds) {
             int id = Integer.parseInt(sId);
-            expressMapper.deleteByPrimaryKey(id);
+            expressMapper.deleteById(id);
         }
     }
 }

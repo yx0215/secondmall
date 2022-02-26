@@ -2,23 +2,30 @@ package com.jzh.xx.transaction.controller.seller;
 
 import com.jzh.xx.transaction.domain.Seller;
 import com.jzh.xx.transaction.service.SellerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("sellerLogin")
+@Api(value = "卖家登录",tags = "卖家登录接口")
 public class SellerLoginController {
 
     @Resource
     private SellerService sellerService;
 
+    /**
+     * 登录页面
+     * @return
+     */
+    @ApiOperation(value = "登录页面")
     @GetMapping("login")
     public String login(){
         return "seller/login";
@@ -31,6 +38,7 @@ public class SellerLoginController {
      * @param model
      * @return
      */
+    @ApiOperation(value = "登录")
     @PostMapping("login")
     public String loginByPassword(String phone, String password, Model model, HttpSession session){
         Seller seller = sellerService.login(phone, password);
@@ -49,6 +57,7 @@ public class SellerLoginController {
      * 卖家注册
      * @return
      */
+    @ApiOperation(value = "卖家注册页面")
     @GetMapping("register")
     public String toRegister(){
         return "seller/register";
@@ -63,6 +72,7 @@ public class SellerLoginController {
      * @param repassword
      * @return
      */
+    @ApiOperation(value = "卖家注册")
     @PostMapping("register")
     public String register(String realname, String phone, String city, String password, String repassword){
         if(!password.equals(repassword)){

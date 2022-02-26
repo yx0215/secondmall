@@ -1,19 +1,28 @@
 package com.jzh.xx.transaction.domain;
 
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import lombok.Data;
 
-public class Admin {
+/**
+ * 
+ * @TableName admin
+ */
+@TableName(value ="admin")
+@Data
+public class Admin implements Serializable {
     /**
      * 管理员ID
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
      * 管理员账号
      */
-    @Column(name = "admin_name")
     private String adminName;
 
     /**
@@ -21,57 +30,47 @@ public class Admin {
      */
     private String password;
 
-    /**
-     * 获取管理员ID
-     *
-     * @return id - 管理员ID
-     */
-    public Integer getId() {
-        return id;
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Admin other = (Admin) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getAdminName() == null ? other.getAdminName() == null : this.getAdminName().equals(other.getAdminName()))
+            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()));
     }
 
-    /**
-     * 设置管理员ID
-     *
-     * @param id 管理员ID
-     */
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getAdminName() == null) ? 0 : getAdminName().hashCode());
+        result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
+        return result;
     }
 
-    /**
-     * 获取管理员账号
-     *
-     * @return admin_name - 管理员账号
-     */
-    public String getAdminName() {
-        return adminName;
-    }
-
-    /**
-     * 设置管理员账号
-     *
-     * @param adminName 管理员账号
-     */
-    public void setAdminName(String adminName) {
-        this.adminName = adminName;
-    }
-
-    /**
-     * 获取管理员密码
-     *
-     * @return password - 管理员密码
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * 设置管理员密码
-     *
-     * @param password 管理员密码
-     */
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", adminName=").append(adminName);
+        sb.append(", password=").append(password);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

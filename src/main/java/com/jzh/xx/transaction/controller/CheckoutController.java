@@ -54,7 +54,7 @@ public class CheckoutController {
         XxUser user = (XxUser) session.getAttribute("user");
 
         // 查询订单详情
-        OrderVO orderVO =orderService.getById(id);
+        OrderVO orderVO = orderService.getById(id);
 
         // 购物车
         List<Cart> cartGoods = new ArrayList<>();

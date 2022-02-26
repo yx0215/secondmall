@@ -1,198 +1,116 @@
 package com.jzh.xx.transaction.domain;
 
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import lombok.Data;
 
-public class Cart {
+/**
+ * 
+ * @TableName cart
+ */
+@TableName(value ="cart")
+@Data
+public class Cart implements Serializable {
     /**
      * 购物车ID
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
      * 用户ID
      */
-    @Column(name = "user_id")
     private Long userId;
 
     /**
-     * 卖家id
+     * 卖家ID
      */
-    @Column(name = "seller_id")
     private Long sellerId;
 
     /**
      * 商品ID
      */
-    @Column(name = "goods_id")
     private Long goodsId;
 
     /**
      * 购买数量
      */
-    @Column(name = "buy_count")
     private Integer buyCount;
 
     /**
      * 商品价格
      */
-    @Column(name = "goods_price")
     private Double goodsPrice;
 
     /**
      * 商品名称
      */
-    @Column(name = "goods_name")
     private String goodsName;
 
     /**
      * 商品图片
      */
-    @Column(name = "goods_img")
     private String goodsImg;
 
-    /**
-     * 获取购物车ID
-     *
-     * @return id - 购物车ID
-     */
-    public Long getId() {
-        return id;
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Cart other = (Cart) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
+            && (this.getSellerId() == null ? other.getSellerId() == null : this.getSellerId().equals(other.getSellerId()))
+            && (this.getGoodsId() == null ? other.getGoodsId() == null : this.getGoodsId().equals(other.getGoodsId()))
+            && (this.getBuyCount() == null ? other.getBuyCount() == null : this.getBuyCount().equals(other.getBuyCount()))
+            && (this.getGoodsPrice() == null ? other.getGoodsPrice() == null : this.getGoodsPrice().equals(other.getGoodsPrice()))
+            && (this.getGoodsName() == null ? other.getGoodsName() == null : this.getGoodsName().equals(other.getGoodsName()))
+            && (this.getGoodsImg() == null ? other.getGoodsImg() == null : this.getGoodsImg().equals(other.getGoodsImg()));
     }
 
-    /**
-     * 设置购物车ID
-     *
-     * @param id 购物车ID
-     */
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
+        result = prime * result + ((getSellerId() == null) ? 0 : getSellerId().hashCode());
+        result = prime * result + ((getGoodsId() == null) ? 0 : getGoodsId().hashCode());
+        result = prime * result + ((getBuyCount() == null) ? 0 : getBuyCount().hashCode());
+        result = prime * result + ((getGoodsPrice() == null) ? 0 : getGoodsPrice().hashCode());
+        result = prime * result + ((getGoodsName() == null) ? 0 : getGoodsName().hashCode());
+        result = prime * result + ((getGoodsImg() == null) ? 0 : getGoodsImg().hashCode());
+        return result;
     }
 
-    /**
-     * 获取用户ID
-     *
-     * @return user_id - 用户ID
-     */
-    public Long getUserId() {
-        return userId;
-    }
-
-    /**
-     * 设置用户ID
-     *
-     * @param userId 用户ID
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    /**
-     * 获取卖家id
-     *
-     * @return seller_id - 卖家id
-     */
-    public Long getSellerId() {
-        return sellerId;
-    }
-
-    /**
-     * 设置卖家id
-     *
-     * @param sellerId 卖家id
-     */
-    public void setSellerId(Long sellerId) {
-        this.sellerId = sellerId;
-    }
-
-    /**
-     * 获取商品ID
-     *
-     * @return goods_id - 商品ID
-     */
-    public Long getGoodsId() {
-        return goodsId;
-    }
-
-    /**
-     * 设置商品ID
-     *
-     * @param goodsId 商品ID
-     */
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    /**
-     * 获取购买数量
-     *
-     * @return buy_count - 购买数量
-     */
-    public Integer getBuyCount() {
-        return buyCount;
-    }
-
-    /**
-     * 设置购买数量
-     *
-     * @param buyCount 购买数量
-     */
-    public void setBuyCount(Integer buyCount) {
-        this.buyCount = buyCount;
-    }
-
-    /**
-     * 获取商品价格
-     *
-     * @return goods_price - 商品价格
-     */
-    public Double getGoodsPrice() {
-        return goodsPrice;
-    }
-
-    /**
-     * 设置商品价格
-     *
-     * @param goodsPrice 商品价格
-     */
-    public void setGoodsPrice(Double goodsPrice) {
-        this.goodsPrice = goodsPrice;
-    }
-
-    /**
-     * 获取商品名称
-     *
-     * @return goods_name - 商品名称
-     */
-    public String getGoodsName() {
-        return goodsName;
-    }
-
-    /**
-     * 设置商品名称
-     *
-     * @param goodsName 商品名称
-     */
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
-    }
-
-    /**
-     * 获取商品图片
-     *
-     * @return goods_img - 商品图片
-     */
-    public String getGoodsImg() {
-        return goodsImg;
-    }
-
-    /**
-     * 设置商品图片
-     *
-     * @param goodsImg 商品图片
-     */
-    public void setGoodsImg(String goodsImg) {
-        this.goodsImg = goodsImg;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", sellerId=").append(sellerId);
+        sb.append(", goodsId=").append(goodsId);
+        sb.append(", buyCount=").append(buyCount);
+        sb.append(", goodsPrice=").append(goodsPrice);
+        sb.append(", goodsName=").append(goodsName);
+        sb.append(", goodsImg=").append(goodsImg);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }
