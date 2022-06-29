@@ -1,4 +1,4 @@
-package com.jzh.xx.transaction;
+package com.yx.xx.transaction;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

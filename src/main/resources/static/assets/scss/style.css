@@ -7194,3 +7194,50 @@ footer.v5 {
     clear: left; } }
 
 /*# sourceMappingURL=style.css.map */
+#header {
+  background-color: #11cd6e;
+  min-width: 1100px;
+}
+
+.header-wrap {
+  width: 1100px;
+  margin: 0 auto;
+  height: 60px;
+}
+
+.header-wrap .logo {
+  display: block;
+  width: 253px;
+  height: 60px;
+  /*background-image: url(../../images/web/logo.png);*/
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.header-wrap .logo h1 {
+  text-indent: -999px;
+}
+
+.logo img {
+  width: 253px;
+  height: 42px;
+  margin-top: 9px;
+}
+
+.header-wrap .nav {
+  margin-left: 20px;
+}
+
+.header-wrap .nav li {
+  float: left;
+}
+
+.header-wrap .nav li a {
+  color: #fff;
+  font-size: 17px;
+  padding: 0 20px;
+  line-height: 60px;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+}

@@ -7,9 +7,9 @@ spring:
       content-type: text/html
   datasource:
     druid:
-      url: jdbc:mysql://175.24.177.155:3306/xx-shop?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://localhost:3306/xx-shop?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
       username: root
-      password: root
+      password: 12345
       initial-size: 1
       min-idle: 1
       max-active: 20
@@ -28,7 +28,7 @@ spring:
 mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.jzh.xx.transaction.domain
+  typeAliasesPackage: com.yx.xx.transaction.domain
   global-config:
     # 关闭MP3.0自带的banner
     banner: false
@@ -45,7 +45,14 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
     map-underscore-to-camel-case: true
     cache-enabled: false
-
+#alipay:
+alipay:
+  appID: 9021000135621210
+  privateKey: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCZlaIqcm4RmeSur81FcSJZEi6H95OPY4Ke4CRNRlSwZRk27IUyW01/mE2G6QOkllOZWow+G3E85ooC/D6+vPatS0rY8xmdXbKTojWsvXVCNicWnNKz8fostn9DBvrJzVKd4rOJXX2kjMQF1wzzlEbGeuA5q+mNV2yruI6AnauICi49EKMV86dr29QhohKzV6hkot2tSTxle5q8HyxKuy2S1Qd8CMGi1CALaRYniUGFiaH4pp0dBEqev4Qbye3fxmbX8ArVWu+gcV9HvwvZAGJIaj2IAKBAyLAi8Ht/TFRXYxOxmoovqJWYeRFCXFzLbiiiUavq6lW2VN4JgnTM5xSxAgMBAAECggEBAJJNDM48dQdFPqb9BqAYtix8+mBBAYp8s2feghYuYewqUguU4QjoGnnqPie+fd7h6D7UF3XuND9cKKnRWX/eh2jqqSDi6kqSf9LMmS60xydMaI3M05Xgcnz3V2ElG+7yLLoDwxyeN1pxUSVzBn5dh9H4KPInBfLDDdzCkNSJ3WVXOIJAEzmRPPUY7rQynQB2Ijy5p52m4eJAcayL5+142+fmAgfzn9KPakslQ/sqDTM7Dyh4wwtpmpk6Izjtsm1ypc/T1EV3+p4D/X/LCcHwZCLuAJcA6SEN9WKxdvmus1PGy53d3KdBZqJnRVReIXvzefmDq7rdVtA4DDwOZu0isgECgYEA4St4eAcq+Z7JUWH0J0C5gk51mO+ncaxhNfxHh1UUiiIeM1bi9i7C9eZxhRNBTOUU02UUKnDXME1KJTN9oLZnr3SC1IVXJdKaShTOSGLP2/egpIE0HzeqFFfCvPkLjEzigNj6bUs/DlMnEfcOJnItX8SABuAaIEyMHgFFwjVMYxECgYEArpz+b8lHqnt1FUse90HfaGthePxpOadNARIUJL8w4vCict6UsJS9eIWneN3/Fdt78+o0/efVgSaudlznmqvxXfzshl9iDte/vFOIz0BMT3fL5nN48cNLDtKZ+4NOVpDOdslqBNl+/NM9iTq/0D3uN9rdIjy8BLDl+1shGasSV6ECgYBQKq7wZPTq/JqGbA6GLygc+ZwqwCBoe0v88X3x89ulNnJ0KtoRdiKZc9s02t8j5mecv98HITesDch5KDTxFCAkOqId0f9uCuY9u9yZrvx8P1SlXQ7WknXuWjSOHUj8QZ9e6mF2qhSgIADIB6K1E2+OKiK+z+jdWQOF50QT2fABUQKBgCQ+O+WyDqkJNRU1YXkK+DcxSqsVITYxTp9xRDMYaCpCrkVPg+dfCDDS9R72XTMJOqI3M8ab70n+YGn7AKuvEstiaym89JqGF6scX6I9A1nfULhFsY3k7lhmSEXXTFRVfDVVuybEikIqCnTId/XeVOrNB+dKWfBTU3knwigUxRrhAoGAN0PJg6iABd/z/DcftVM+qYGEqZZcHukDY3kDBmsi+4lDWbWrtqaBGTElbB9DunXMNKBnA4CizErN2GxWnfpJDsBbIrKWBAYYE7a7WJx0/NRylyPAzwmHYvAxKbEtZQVGmx4hCeoPtJ/5/1gEdzXLUZ6dchxOErUQXaxFz7+PDNk=
+  publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm2NJMdJgxOfkRNNUqfrv7SWVglVh0WTi+eshfN/8sk9SWd4plBORT8DmhghP6hk/CPxrcKio+5UNNkPjjeyn4nAMJK/Ar3sNvqs3mrA/HLVVsO2hPcX90/eKHj/cBJf1m7SFQCJZtpIe0LmcSof929B7hc5m8xxz1uuVhrwu/RmyiBXaLxWVxswr+AGOsP3Zb9NXz2n6lBFA9ZRLN3to8YmIz9hTX00gS4BoxB9LAJlCQc7YhMIC9VuVocEqaZQtWwaM19BcwfXA3HkPJ2hic8hzwxCWjDwi6X+VNPYhi07M1lX/UWAhIH572cZaL9o5heYN8uYCdfsQVtdwxhDStwIDAQAB
+  gateway: openapi.alipaydev.com
+  returnUrl:
+  notifyUrl:
 #redis
 redis:
   #redis机器ip
@@ -88,10 +95,10 @@ redis:
 
 #swagger公共信息
 swagger:
-  title: 闲闲二手 接口文档系统
-  description: 闲闲二手 接口文档系统
+  title: 二手 接口文档系统
+  description: 二手 接口文档系统
   version: 1.0.0.RELEASE
-  license: Powered By jzh
+  license: Powered By yx
   license-url: https://gitee.com/youth_and_pig
   terms-of-service-url: https://gitee.com/youth_and_pig
   contact:
