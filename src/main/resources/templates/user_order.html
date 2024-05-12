@@ -1,0 +1,60 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 包含公共的 head 部分 -->
+    <title>个人订单</title>
+    <!-- 这里包含了所需的 CSS 文件 -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/your_styles.css">
+</head>
+<body>
+<section class="checkout-page">
+    <div class="container">
+        <div class="heading-sub">
+            <h3 class="pull-left">我的订单</h3>
+            <ul class="other-link-sub pull-right">
+                <li><a href="/">主页</a></li>
+                <li><a class="active" href="#cart">个人信息</a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="orders">
+            <!-- 这里是订单功能的 HTML 代码 -->
+            <div class="checkout-cart-form">
+                <div class="row">
+                    <div class="col-md-10 col-sm-12">
+                        <table class="table shop_table">
+                            <thead>
+                            <tr>
+                                <th class="product-thumbnail">我的订单</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="order_item" th:each="bought:${orderVO.orderDetails}">
+                                <td class="product-thumbnail"><a th:href="@{'/goods/detail/'+${bought.goodsId}}"><img th:src="${bought.goodsImg}" alt="images" class="img-responsive" width="100px" height="75px"></a></td>
+                                <td class="product-name">
+                                    <a th:href="@{'/goods/detail/'+${bought.goodsId}}">[[${bought.goodsName}]]</a>
+                                </td>
+                                <td class="product-price">
+                                    <p class="price">￥[[${bought.goodsPrice}]]</p>
+                                </td>
+                                <td class="product-price">
+                                    <p class="price">[[${bought.buyCount}]]</p>
+                                </td>
+                                <td class="product-price product-subtotal" th:each="time:${orderVO.createTime}">
+                                    <p class="price">[[${#dates.format(time,'yyyy-MM-dd')}]]</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 这里包含了所需的 JavaScript 文件 -->
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/your_scripts.js"></script>
+</body>
+</html>
